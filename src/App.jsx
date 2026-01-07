@@ -1,13 +1,12 @@
-import Portfolio from "./components/Portfolio.jsx";
+import React from 'react'
+import Portfolio from './components/Portfolio.jsx'
 
-
-
-function App() {
-  return  (
-    <div className="select-none ">
+const App = () => {
+  return (
+    <div className='select-none'>
       <Portfolio/>
     </div>
   )
 }
 
-export default App;
+export default App

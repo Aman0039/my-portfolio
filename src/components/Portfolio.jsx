@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "motion/react";
 import { useTheme } from "../context/ThemeContext";
 import emailjs from "@emailjs/browser";
 import {
@@ -23,15 +23,17 @@ import {
   Atom,
 } from "lucide-react";
 
+
+
 // SimpleIcons SVGs for Github and Linkedin
 const GithubIcon = (props) => (
-  <svg {...props} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <svg {...props} viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.084-.729.084-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.304.762-1.604-2.665-.3-5.466-1.334-5.466-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 013.003-.404c1.018.005 2.045.138 3.003.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.628-5.475 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
   </svg>
 );
 
 const LinkedinIcon = (props) => (
-  <svg {...props} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <svg {...props} viewBox="0 0 24 24" fill="currentColor">
     <path d="M20.447 20.452h-3.554v-5.569c0-1.327-.027-3.037-1.849-3.037-1.851 0-2.132 1.445-2.132 2.939v5.667H9.358V9h3.414v1.561h.049c.476-.899 1.637-1.849 3.369-1.849 3.602 0 4.268 2.368 4.268 5.455v6.285zM5.337 7.433c-1.144 0-2.069-.926-2.069-2.069 0-1.143.925-2.069 2.069-2.069 1.143 0 2.069.926 2.069 2.069 0 1.143-.926 2.069-2.069 2.069zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .771 0 1.723v20.549C0 23.229.792 24 24 24h20.451C23.2 24 24 23.229 24 22.271V1.723C24 .771 23.2 0 22.222 0z" />
   </svg>
 );
@@ -52,37 +54,22 @@ function ImageWithFallback({ src, alt, className }) {
 
 // Floating Particles Background
 function FloatingParticles() {
-  // prevent usage during SSR/build
-  if (typeof window === "undefined") return null;
-
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 35 }).map(() => ({
-        initialX: Math.random() * window.innerWidth,
-        initialY: Math.random() * window.innerHeight,
-        animateX: Math.random() * window.innerWidth,
-        animateY: Math.random() * window.innerHeight,
-        duration: Math.random() * 30 + 10,
-      })),
-    []
-  );
-
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p, i) => (
+      {[...Array(35)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-2 h-2 bg-indigo-500/20 rounded-full"
           initial={{
-            x: p.initialX,
-            y: p.initialY,
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
           }}
           animate={{
-            x: p.animateX,
-            y: p.animateY,
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
           }}
           transition={{
-            duration: p.duration,
+            duration: Math.random() * 30 + 10,
             repeat: Infinity,
             repeatType: "reverse",
           }}
@@ -208,6 +195,7 @@ const Portfolio = () => {
   const [formStatus, setFormStatus] = useState("idle");
 
   //Form data
+
   const {
     register,
     handleSubmit,
@@ -216,6 +204,7 @@ const Portfolio = () => {
   } = useForm();
 
   // Handle Submit form
+
   const onSubmit = async (data) => {
     setFormStatus("sending");
 
@@ -246,6 +235,7 @@ const Portfolio = () => {
     }
   };
 
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -253,13 +243,14 @@ const Portfolio = () => {
     restDelta: 0.001,
   });
 
+  // theme handled by ThemeProvider
+
   // Handle scroll to top visibility
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -274,14 +265,14 @@ const Portfolio = () => {
   const projects = [
     {
       title: "Loan Application",
-      description:
-        "A modern, full-stack loan application with multi-step form, Apply loan, and track application status on the dashboard.",
-      image: "/image/project1.jpg",
+      description: "A modern, full-stack loan application with multi-step form, Apply loan, and track application status on the dashboard.",
+      image: "image/project1.jpg",
       tags: ["React", "JSX", "Tailwind CSS", "Node.js"],
       link: "https://loan-application-oxp8.vercel.app/",
       github: "https://github.com/Aman0039/Loan-Application/tree/main/Loan-Application",
     },
   ];
+
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -289,7 +280,7 @@ const Portfolio = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   return (
@@ -352,7 +343,10 @@ const Portfolio = () => {
                   )}
                 </motion.button>
                 {/* Mobile Menu Button */}
-                <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+                <button
+                  className="md:hidden p-2"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
                   {menuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
               </div>
@@ -384,10 +378,21 @@ const Portfolio = () => {
         {/* Hero Section */}
         <section id="hero" className="py-24 md:py-32 px-6 flex items-center justify-center relative mt-16">
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mb-6">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mb-6"
+              >
                 <Sparkles size={16} className="text-indigo-600 dark:text-indigo-400" />
-                <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">Available for work</span>
+                <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                  Available for work
+                </span>
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
                 Hello, I'm{" "}
@@ -398,6 +403,7 @@ const Portfolio = () => {
               <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                 Aspiring <strong>MERN Stack Web Developer</strong> with strong foundations in <strong>React.js</strong> and <strong>JavaScript</strong>, focused on building fast, scalable, and user-centric web applications.
               </p>
+
 
               <div className="flex gap-4 mb-8">
                 <motion.a
@@ -423,21 +429,35 @@ const Portfolio = () => {
                     whileHover={{ scale: 1.2, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                     className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all"
-                    aria-label={`Open ${i === 0 ? "GitHub" : "LinkedIn"}`}
                   >
                     {social.icon}
                   </motion.a>
                 ))}
               </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 2, delay: 0.4 }} className="relative flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 2, delay: 0.4 }}
+              className="relative flex justify-center"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-indigo-900 to-purple-900 rounded-full blur-3xl opacity-20 animate-pulse" />
-              <motion.div className="relative w-full max-w-xs md:max-w-sm aspect-square rounded-3xl overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl">
-                <ImageWithFallback src="/image/Aman.jpg" alt="Profile" className="w-full h-full object-cover object-center" />
+              <motion.div
+                className="relative w-full max-w-xs md:max-w-sm aspect-square rounded-3xl overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl"
+              >
+                <ImageWithFallback
+                  src="image/Aman.jpg"
+                  alt="Profile"
+                  className="w-full h-full object-cover object-center"
+                />
               </motion.div>
             </motion.div>
           </div>
-          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="absolute bottom-6 left-1/2 -translate-x-1/2">
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute bottom-6 left-1/2 -translate-x-1/2"
+          >
             <ChevronDown size={32} className="text-indigo-600 dark:text-indigo-400" />
           </motion.div>
         </section>
@@ -445,15 +465,28 @@ const Portfolio = () => {
         {/* About Section */}
         <section id="about" className="py-20 px-6 bg-white dark:bg-slate-800/50 transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 About <span className="bg-linear-to-tr from-indigo-600 to-rose-500 bg-clip-text text-transparent">Me</span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400">Get to know me better and discover my journey</p>
+              <p className="text-xl text-slate-600 dark:text-slate-400">
+                Get to know me better and discover my journey
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="space-y-6"
+              >
                 <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                   I'm a passionate full-stack JavaScript developer with a deep love for creating beautiful and functional web applications. With expertise in the MERN stack, I specialize in building scalable solutions that solve real-world problems.
                 </p>
@@ -465,7 +498,13 @@ const Portfolio = () => {
                 </p>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="space-y-6"
+              >
                 <div className="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-800">
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-indigo-600 rounded-lg text-white mt-1">
@@ -473,7 +512,9 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Development</h3>
-                      <p className="text-slate-600 dark:text-slate-400">Full-stack development using modern JavaScript frameworks and tools</p>
+                      <p className="text-slate-600 dark:text-slate-400">
+                        Full-stack development using modern JavaScript frameworks and tools
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -485,7 +526,9 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Design</h3>
-                      <p className="text-slate-600 dark:text-slate-400">Creating intuitive and visually appealing user interfaces</p>
+                      <p className="text-slate-600 dark:text-slate-400">
+                        Creating intuitive and visually appealing user interfaces
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -497,7 +540,9 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Innovation</h3>
-                      <p className="text-slate-600 dark:text-slate-400">Bringing creative ideas to life with cutting-edge technology</p>
+                      <p className="text-slate-600 dark:text-slate-400">
+                        Bringing creative ideas to life with cutting-edge technology
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -509,11 +554,18 @@ const Portfolio = () => {
         {/* Skills Section */}
         <section id="skills" className="py-20 px-6">
           <div className="max-w-7xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Skills & <span className="bg-linear-to-tr from-indigo-600 to-rose-500 bg-clip-text text-transparent">Expertise</span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400">Technologies I work with to bring ideas to life</p>
+              <p className="text-xl text-slate-600 dark:text-slate-400">
+                Technologies I work with to bring ideas to life
+              </p>
             </motion.div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {skills.map((skill, i) => (
@@ -524,13 +576,21 @@ const Portfolio = () => {
         </section>
 
         {/* Projects Section */}
+
         <section id="projects" className="py-20 px-6 bg-slate-50 dark:bg-slate-800/30">
           <div className="max-w-7xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Featured <span className="bg-linear-to-tr from-indigo-600 to-rose-500 bg-clip-text text-transparent">Projects</span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400">A showcase of my recent work and achievements</p>
+              <p className="text-xl text-slate-600 dark:text-slate-400">
+                A showcase of my recent work and achievements
+              </p>
             </motion.div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project, i) => (
@@ -540,17 +600,32 @@ const Portfolio = () => {
           </div>
         </section>
 
+
         {/* GitHub Stats Section */}
+
         <section className="py-20 px-6 bg-white dark:bg-slate-800/50 transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 GitHub <span className="bg-linear-to-tr from-indigo-600 to-rose-500 bg-clip-text text-transparent">Activity</span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400">My coding journey visualized through contributions</p>
+              <p className="text-xl text-slate-600 dark:text-slate-400">
+                My coding journey visualized through contributions
+              </p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative group">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative group"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-purple-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
               <div className="relative bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-x-auto shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:border-indigo-400 dark:group-hover:border-indigo-600">
                 <motion.img
@@ -563,7 +638,13 @@ const Portfolio = () => {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-center mt-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="text-center mt-8"
+            >
               <motion.a
                 href="https://github.com/Aman0039"
                 target="_blank"
@@ -579,17 +660,31 @@ const Portfolio = () => {
           </div>
         </section>
 
+
         {/* LeetCode Stats Section */}
         <section className="py-20 px-6 bg-slate-50 dark:bg-slate-800/30 transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 LeetCode <span className="bg-linear-to-tr from-indigo-600 to-rose-500 bg-clip-text text-transparent">Stats</span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400">Problem-solving skills and coding progress</p>
+              <p className="text-xl text-slate-600 dark:text-slate-400">
+                Problem-solving skills and coding progress
+              </p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative group flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative group flex justify-center"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
               <div className="relative bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:border-purple-400 dark:group-hover:border-purple-600 max-w-2xl w-full">
                 <motion.img
@@ -602,14 +697,20 @@ const Portfolio = () => {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-center mt-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="text-center mt-8"
+            >
               <motion.a
                 href="https://leetcode.com/u/Amanpathak1/"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-amber-400 hover:bg-indigo-500 hover:text-white text-slate-800 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-indigo-600 hover:text-white text-slate-900 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
               >
                 <Code2 size={20} />
                 View LeetCode Profile
@@ -621,24 +722,54 @@ const Portfolio = () => {
         {/* Contact Section */}
         <section id="contact" className="py-20 px-6 bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-indigo-900/20 dark:to-purple-900/20">
           <div className="max-w-4xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-              <motion.div initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mb-6"
+              >
                 <Mail size={16} className="text-indigo-600 dark:text-indigo-400" />
-                <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">Get in Touch</span>
+                <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                  Get in Touch
+                </span>
               </motion.div>
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Let's <span className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Connect</span>
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Feel free to reach out for collaborations or just a friendly hello.</p>
+              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Feel free to reach out for collaborations or just a friendly hello.
+              </p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="relative group">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="relative group"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
               <div className="relative bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-12 shadow-2xl border border-slate-200 dark:border-slate-700 hover:shadow-2xl transition-all duration-300">
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Full Name */}
-                    <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="relative">
-                      <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Full Name</label>
+                    <motion.div
+                      initial={{ opacity: 0, x: -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                      whileFocus={{ scale: 1.02 }}
+                      className="relative"
+                    >
+                      <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">
+                        Full Name
+                      </label>
                       <input
                         type="text"
                         placeholder="Your name"
@@ -651,12 +782,25 @@ const Portfolio = () => {
                         })}
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900 outline-none transition-all placeholder-slate-400"
                       />
-                      {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                      {errors.name && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.name.message}
+                        </p>
+                      )}
                     </motion.div>
 
                     {/* Email */}
-                    <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="relative">
-                      <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Email Address</label>
+                    <motion.div
+                      initial={{ opacity: 0, x: 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 }}
+                      whileFocus={{ scale: 1.02 }}
+                      className="relative"
+                    >
+                      <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">
+                        Email Address
+                      </label>
                       <input
                         type="email"
                         placeholder="your@email.com"
@@ -669,13 +813,26 @@ const Portfolio = () => {
                         })}
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900 outline-none transition-all placeholder-slate-400"
                       />
-                      {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                      {errors.email && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.email.message}
+                        </p>
+                      )}
                     </motion.div>
                   </div>
 
                   {/* Message */}
-                  <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="relative">
-                    <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Your Message</label>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 }}
+                    whileFocus={{ scale: 1.02 }}
+                    className="relative"
+                  >
+                    <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">
+                      Your Message
+                    </label>
                     <textarea
                       rows={5}
                       placeholder="Tell me about your project..."
@@ -688,7 +845,11 @@ const Portfolio = () => {
                       })}
                       className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900 outline-none transition-all resize-none placeholder-slate-400"
                     />
-                    {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
+                    {errors.message && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.message.message}
+                      </p>
+                    )}
                   </motion.div>
 
                   {/* Button */}
@@ -710,7 +871,11 @@ const Portfolio = () => {
                     )}
                     {formStatus === "sending" && (
                       <>
-                        <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }} className="w-5 h-5 border-2 border-white border-t-transparent rounded-full" />
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity }}
+                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                        />
                         Sending...
                       </>
                     )}
@@ -726,12 +891,21 @@ const Portfolio = () => {
           </div>
         </section>
 
+
+
         {/* Footer */}
         <footer className="py-12 px-6 border-t border-slate-200 dark:border-slate-700 bg-linear-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8 mb-8">
+
               {/* Social Links */}
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-center"
+              >
                 <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Connect</h4>
                 <div className="flex justify-center gap-4">
                   {[
@@ -751,7 +925,6 @@ const Portfolio = () => {
                       whileTap={{ scale: 0.9 }}
                       className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 transition-all cursor-pointer"
                       title={social.label}
-                      aria-label={social.label}
                     >
                       {social.icon}
                     </motion.a>
@@ -760,7 +933,13 @@ const Portfolio = () => {
               </motion.div>
 
               {/* Contact Info */}
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-center md:text-right">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="text-center md:text-right"
+              >
                 <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Contact</h4>
                 <div className="space-y-2">
                   <p className="text-slate-600 dark:text-slate-400 text-sm">
@@ -773,12 +952,28 @@ const Portfolio = () => {
             </div>
 
             {/* Divider */}
-            <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="h-px bg-linear-to-r from-transparent via-slate-300 dark:via-slate-600 to-transparent mb-6 origin-left" />
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="h-px bg-linear-to-r from-transparent via-slate-300 dark:via-slate-600 to-transparent mb-6 origin-left"
+            />
 
             {/* Copyright & Credits */}
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="text-center space-y-2">
-              <p className="text-slate-600 dark:text-slate-400 text-sm">Copyright © {new Date().getFullYear()} Aman Pathak. All rights reserved.</p>
-              <p className="text-slate-500 dark:text-slate-500 text-xs">Built it using React, Motion & Tailwind CSS</p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="text-center space-y-2"
+            >
+              <p className="text-slate-600 dark:text-slate-400 text-sm">
+                Copywrite ©  {new Date().getFullYear()} Aman Pathak. All rights reserved.
+              </p>
+              <p className="text-slate-500 dark:text-slate-500 text-xs">
+                Built it using React, Motion & Tailwind CSS
+              </p>
             </motion.div>
           </div>
         </footer>
@@ -790,13 +985,13 @@ const Portfolio = () => {
           className="fixed right-6 cursor-pointer bottom-6 z-50 p-3 bg-indigo-600 dark:bg-indigo-500 text-white rounded-full shadow-lg hover:bg-purple-600 dark:hover:bg-purple-500 transition-all hover:scale-110"
           aria-label="Scroll to top"
           disabled={!showScrollTop}
-          style={{ pointerEvents: showScrollTop ? "auto" : "none" }}
+          pointerEvents={showScrollTop ? "auto" : "none"}
         >
           <ChevronsUp size={24} />
         </motion.button>
       </div>
     </div>
   );
-};
+}
 
 export default Portfolio;
