@@ -1,4 +1,5 @@
-import  Hero  from "./components/Hero.jsx"
+import Portfolio from "./components/Portfolio"
+
 
 
 
@@ -6,7 +7,7 @@ import  Hero  from "./components/Hero.jsx"
 const App = () => {
   return (
     <div className='select-none'>
-      <Hero/>
+      <Portfolio/>
     </div>
   )
 }

@@ -188,7 +188,7 @@ function ProjectCard({ project, index }) {
   );
 }
 
-export function Hero(){
+const Portfolio = () =>{
   const [menuOpen, setMenuOpen] = useState(false);
   const { darkMode, toggle } = useTheme();
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -710,7 +710,7 @@ export function Hero(){
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-indigo-600 hover:text-white text-slate-900 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
               >
                 <Code2 size={20} />
                 View LeetCode Profile
@@ -993,3 +993,5 @@ export function Hero(){
     </div>
   );
 }
+
+export default Portfolio;
