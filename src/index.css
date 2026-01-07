@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap');
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-rale: "Atkinson Hyperlegible Mono", sans-serif;
+  }
+
+  body {
+    font-family: var(--font-rale);
+  }
+}
