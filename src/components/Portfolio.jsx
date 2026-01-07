@@ -188,7 +188,7 @@ function ProjectCard({ project, index }) {
   );
 }
 
-const Portfolio = () =>{
+export function Portfolio(){
   const [menuOpen, setMenuOpen] = useState(false);
   const { darkMode, toggle } = useTheme();
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -993,5 +993,3 @@ const Portfolio = () =>{
     </div>
   );
 }
-
-export default Portfolio;

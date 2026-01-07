@@ -1,13 +1,9 @@
-import Portfolio from "./components/Portfolio"
-
-
-
-
+import { Portfolio } from "@/components/Portfolio"
 
 const App = () => {
   return (
     <div className='select-none'>
-      <Portfolio/>
+      <Portfolio />
     </div>
   )
 }
