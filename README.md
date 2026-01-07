@@ -6,7 +6,7 @@ It showcases my skills, projects, and contact information in a clean and modern 
 ---
 
 ## 🚀 Live Demo
-🔗 https://your-live-link-here.com  
+🔗 https://amanwebapp.netlify.app/  
 *(Replace with Vercel / Netlify link)*
 
 ---
