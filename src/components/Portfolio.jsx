@@ -271,22 +271,6 @@ export function Portfolio() {
       link: "https://loan-application-oxp8.vercel.app/",
       github: "https://github.com/Aman0039/Loan-Application/tree/main/Loan-Application",
     },
-    {
-      title: "AI Task Manager",
-      description: "Intelligent task management app with AI-powered scheduling and productivity insights.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-      tags: ["Next.js", "OpenAI", "Prisma", "Tailwind"],
-      link: "https://example.com",
-      github: "https://github.com",
-    },
-    {
-      title: "Social Media Dashboard",
-      description: "Analytics dashboard for managing multiple social media accounts with real-time metrics.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-      tags: ["TypeScript", "React", "Firebase", "Chart.js"],
-      link: "https://example.com",
-      github: "https://github.com",
-    },
   ];
 
 
