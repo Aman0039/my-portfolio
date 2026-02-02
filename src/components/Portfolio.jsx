@@ -265,12 +265,19 @@ export function Portfolio(){
   const projects = [
     {
       title: "Loan Application",
-      description: "A modern, full-stack loan application with multi-step form, Apply loan, and track application status on the dashboard.",
+      description: "A modern, frontend loan application with multi-step form, Apply loan, and track application status on the dashboard.",
       image: "image/project1.jpg",
-      tags: ["React", "JSX", "Tailwind CSS", "Node.js"],
+      tags: ["React", "Javascript", "Tailwind CSS", "Node.js"],
       link: "https://loan-application-oxp8.vercel.app/",
       github: "https://github.com/Aman0039/Loan-Application/tree/main/Loan-Application",
     },
+    {
+      title: "Educational Website",
+      description: "A production-level React application featuring modern UI/UX, optimized performance, SEO best practices, and Google Sheets API integration.",
+      image: "image/project2.png",
+      tags: ["React", "TypeScript", "Tailwind CSS", "API"],
+      link: "https://newtechedu.vercel.app/",
+    }
   ];
 
 
