@@ -269,6 +269,7 @@ export function Portfolio(){
       image: "image/project2.png",
       tags: ["React", "TypeScript", "Tailwind CSS", "API"],
       link: "https://newtechedu.vercel.app/",
+      github: "https://github.com/Aman0039"
     },
     {
       title: "Loan Application",
