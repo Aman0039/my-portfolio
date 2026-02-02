@@ -264,6 +264,13 @@ export function Portfolio(){
 
   const projects = [
     {
+      title: "Educational Website",
+      description: "A production-level React application featuring modern UI/UX, optimized performance, SEO best practices, and Google Sheets API integration.",
+      image: "image/project2.png",
+      tags: ["React", "TypeScript", "Tailwind CSS", "API"],
+      link: "https://newtechedu.vercel.app/",
+    },
+    {
       title: "Loan Application",
       description: "A modern, frontend loan application with multi-step form, Apply loan, and track application status on the dashboard.",
       image: "image/project1.jpg",
@@ -271,13 +278,6 @@ export function Portfolio(){
       link: "https://loan-application-oxp8.vercel.app/",
       github: "https://github.com/Aman0039/Loan-Application/tree/main/Loan-Application",
     },
-    {
-      title: "Educational Website",
-      description: "A production-level React application featuring modern UI/UX, optimized performance, SEO best practices, and Google Sheets API integration.",
-      image: "image/project2.png",
-      tags: ["React", "TypeScript", "Tailwind CSS", "API"],
-      link: "https://newtechedu.vercel.app/",
-    }
   ];
 
 
