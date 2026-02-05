@@ -279,6 +279,14 @@ export function Portfolio(){
       link: "https://loan-application-oxp8.vercel.app/",
       github: "https://github.com/Aman0039/Loan-Application/tree/main/Loan-Application",
     },
+    {
+      title: "Full Stack Search Products",
+      description: "Created a full-stack product search application using Express.js for backend APIs and React.js, relevant search experience using meta data",
+      image: "image/project3.png",
+      tags: ["React", "Tailwind CSS", "Node.js", "Express.js"],
+      link: "https://productslist-omega.vercel.app/api/v1/products",
+      github: "https://github.com/Aman0039/Products_Catalog"
+    },
   ];
 
 
