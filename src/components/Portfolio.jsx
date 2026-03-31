@@ -22,6 +22,7 @@ import {
   Hexagon,
   Atom,
 } from "lucide-react";
+import { button } from "motion/react-client";
 
 
 
@@ -56,7 +57,7 @@ function ImageWithFallback({ src, alt, className }) {
 function FloatingParticles() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {[...Array(35)].map((_, i) => (
+      {[...Array(25)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-2 h-2 bg-indigo-500/20 rounded-full"
@@ -162,7 +163,7 @@ function ProjectCard({ project, index }) {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 1 : 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="flex gap-4"
+              className="flex justify-around"
             >
               <a
                 href={project.link}
@@ -259,7 +260,6 @@ export function Portfolio(){
     { name: "React.js", icon: <Atom size={24} />, level: 85 },
     { name: "Node.js", icon: <Hexagon size={24} />, level: 70 },
     { name: "Tailwind CSS", icon: <Sparkles size={24} />, level: 85 },
-    { name: "Motion & Animation", icon: <Rocket size={24} />, level: 65 },
   ];
 
   const projects = [
@@ -871,7 +871,7 @@ export function Portfolio(){
                   {/* Button */}
                   <motion.button
                     type="submit"
-                    disabled={isSubmitting || formStatus === "sending"}
+                    disabled={isSubmitting || formStatus === "sending" || formStatus === "sent"}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -898,6 +898,11 @@ export function Portfolio(){
                     {formStatus === "sent" && (
                       <>
                         Message Sent! <CheckCircle2 size={18} />
+                        {
+                          setTimeout(()=>{
+                            button.disabled = "false";
+                          },5000)
+                        }
                       </>
                     )}
                   </motion.button>
