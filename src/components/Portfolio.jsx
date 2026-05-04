@@ -21,6 +21,7 @@ import {
   Download,
   Hexagon,
   Atom,
+  Database,
 } from "lucide-react";
 import { button } from "motion/react-client";
 
@@ -256,10 +257,11 @@ export function Portfolio(){
   }, []);
 
   const skills = [
-    { name: "JavaScript", icon: <Code2 size={24} />, level: 90 },
-    { name: "React.js", icon: <Atom size={24} />, level: 85 },
-    { name: "Node.js", icon: <Hexagon size={24} />, level: 70 },
-    { name: "Tailwind CSS", icon: <Sparkles size={24} />, level: 85 },
+    { name: "JavaScript", icon: <Code2 size={24} />, level: 85 },
+    { name: "React.js", icon: <Atom size={24} />, level: 76 },
+    { name: "Express.js", icon: <Sparkles size={24} />, level: 72 },
+    { name: "MongoDB", icon: <Database size={24} />, level: 70 },
+    { name: "Node.js", icon: <Hexagon size={24} />, level: 80 }
   ];
 
   const projects = [
@@ -272,12 +274,12 @@ export function Portfolio(){
       github: "https://github.com/Aman0039"
     },
     {
-      title: "Loan Application",
-      description: "A modern, frontend loan application with multi-step form, Apply loan, and track application status on the dashboard.",
-      image: "image/project1.jpg",
-      tags: ["React", "Javascript", "Tailwind CSS", "Node.js"],
-      link: "https://loan-application-oxp8.vercel.app/",
-      github: "https://github.com/Aman0039/Loan-Application/tree/main/Loan-Application",
+      title: "Collaborative Workflow Orchestration System",
+      description: "A full-stack MERN SaaS platform for project and workflow management.",
+      image: "image/project1.png",
+      tags: ["React", "Javascript", "Express.js", "MongoDB"],
+      link: "https://workflow-esmaggico.vercel.app/",
+      github: "https://github.com/Aman0039/Es-magico-assignment",
     },
     {
       title: "Full Stack Search Products",
