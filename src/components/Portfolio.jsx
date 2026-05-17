@@ -272,23 +272,7 @@ export function Portfolio(){
       tags: ["React", "TypeScript", "Tailwind CSS", "API"],
       link: "https://newtechedu.vercel.app/",
       github: "https://github.com/Aman0039"
-    },
-    {
-      title: "Collaborative Workflow Orchestration System",
-      description: "A full-stack MERN SaaS platform for project and workflow management.",
-      image: "image/project1.png",
-      tags: ["React", "Javascript", "Express.js", "MongoDB"],
-      link: "https://workflow-esmaggico.vercel.app/",
-      github: "https://github.com/Aman0039/Es-magico-assignment",
-    },
-    {
-      title: "Full Stack Search Products",
-      description: "Created a full-stack product search application using Express.js for backend APIs and React.js, relevant search experience using meta data",
-      image: "image/project3.png",
-      tags: ["React", "Tailwind CSS", "Node.js", "Express.js"],
-      link: "https://productslist-omega.vercel.app/api/v1/products",
-      github: "https://github.com/Aman0039/Products_Catalog"
-    },
+    }
   ];
 
 
